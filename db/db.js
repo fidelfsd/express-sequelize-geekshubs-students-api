@@ -19,10 +19,8 @@ const sequelize = new Sequelize(
 );
 
 module.exports = async () => {
-   try {
-      await sequelize.authenticate();
-      console.log("Connection to database has been established successfully");
-   } catch (error) {
-      console.error("Unable to connect to database: ", error);
-   }
+   const dbConnection = await sequelize.authenticate();
+   const database = process.env.MYSQL_DATABASE || config.development.database;
+   console.log(`Successfully connected to '${database}' database`);
+   return dbConnection;
 };
